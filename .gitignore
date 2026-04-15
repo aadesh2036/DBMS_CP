@@ -1,0 +1,26 @@
+# Node
+node_modules/
+dist/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Local MySQL instance/data
+mysql-instance/
+mysql-data/
+
+# OS/editor
+.DS_Store
+.vscode/
