@@ -76,6 +76,16 @@ function randomDateWithinDays(days) {
   return new Date(now - offset);
 }
 
+function randomDateBetween(startDate, endDate) {
+  const start = startDate.getTime();
+  const end = endDate.getTime();
+  if (end <= start) {
+    return new Date(start);
+  }
+  const offset = randomInt(0, end - start);
+  return new Date(start + offset);
+}
+
 function buildUsername(firstName, lastName) {
   const salt = randomInt(10, 999);
   return `${firstName[0]}${lastName}${salt}`.toLowerCase();
@@ -114,12 +124,18 @@ async function simulateData(req, res) {
           continue;
         }
 
+        const createdAt = randomDateWithinDays(90);
+        const lastLogin = randomDateBetween(createdAt, new Date());
+
         const result = await simulateModel.insertUser(connection, {
           username,
-          full_name: `${firstName} ${lastName}`,
           email: `${username}@example.com`,
+          password_hash: `hash_${username}`,
+          full_name: `${firstName} ${lastName}`,
           bio: `Into ${randomFrom(bioTopics)}.`,
-          created_at: randomDateWithinDays(90),
+          profile_picture_url: `https://pics.example.com/avatars/${username}.png`,
+          created_at: createdAt,
+          last_login: lastLogin,
         });
 
         if (result.affectedRows > 0) {

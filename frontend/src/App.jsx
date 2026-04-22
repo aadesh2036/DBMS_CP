@@ -12,13 +12,14 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <div>
+        <div className="hero-copy">
           <p className="eyebrow">Social Media User Behavior Analysis</p>
-          <h1>Insights Dashboard</h1>
+          <h1>PulseScope Dashboard</h1>
           <p className="subtitle">
-            Track followers, likes, and engagement in one place.
+            Multi-visual analytics for user growth, engagement quality, and activity distribution.
           </p>
         </div>
+        <div className="hero-chip">Live data story</div>
       </header>
       <main className="app-grid">
         <section className="panel">

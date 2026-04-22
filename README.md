@@ -7,6 +7,30 @@ A beginner-friendly full-stack DBMS project that analyzes social media activity 
 - Database: MySQL
 - Frontend: React (Vite)
 
+## Quick Demo (Single Command)
+Use this when you want to quickly present the project.
+
+1. Install dependencies:
+```
+npm --prefix backend install
+npm --prefix frontend install
+```
+
+2. Run everything with one command from the project root:
+```
+npm run showcase
+```
+
+What `npm run showcase` does:
+- Reads DB settings from `backend/.env`
+- Drops and recreates the configured database for a clean demo run
+- Applies `database/schema.sql` and `database/seed.sql`
+- Starts backend and frontend in separate PowerShell windows
+
+Default URLs:
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:4000`
+
 ## Folder Structure
 ```
 backend/
@@ -149,3 +173,7 @@ npm run dev
 
 ## How Simulation Works
 The simulation endpoint creates random users, posts, comments, likes, and followers in a single transaction. It generates realistic timestamps, avoids duplicate likes and follows using unique constraints, and returns how many records were inserted. The dashboard refreshes to show the new analytics.
+
+## Notes
+- Ensure MySQL is running on the host/port configured in `backend/.env` before running `npm run showcase`.
+- If `mysql` is not in PATH, the script also tries `C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe`.

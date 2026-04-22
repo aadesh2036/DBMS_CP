@@ -31,18 +31,25 @@ async function commentOnPost(req, res) {
 
 async function followUser(req, res) {
   try {
-    const { follower_id, following_id } = req.body;
-    if (!follower_id || !following_id) {
+    const followerUserId = req.body.follower_user_id ?? req.body.follower_id;
+    const followedUserId = req.body.followed_user_id ?? req.body.following_id;
+    if (!followerUserId || !followedUserId) {
       return res
         .status(400)
-        .json({ error: "follower_id and following_id are required" });
+        .json({
+          error:
+            "follower_user_id (or follower_id) and followed_user_id (or following_id) are required",
+        });
     }
-    if (Number(follower_id) === Number(following_id)) {
+    if (Number(followerUserId) === Number(followedUserId)) {
       return res
         .status(400)
-        .json({ error: "follower_id cannot equal following_id" });
+        .json({ error: "follower_user_id cannot equal followed_user_id" });
     }
-    const result = await interactionModel.addFollow(follower_id, following_id);
+    const result = await interactionModel.addFollow(
+      followerUserId,
+      followedUserId
+    );
     const inserted = result.affectedRows > 0;
     res.json({ message: inserted ? "Followed user" : "Already following" });
   } catch (error) {

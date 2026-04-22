@@ -1,19 +1,28 @@
 const db = require("../db");
 
 async function getAllUserIds(connection) {
-  const [rows] = await connection.query("SELECT id FROM users");
-  return rows.map((row) => row.id);
+  const [rows] = await connection.query("SELECT user_id FROM users");
+  return rows.map((row) => row.user_id);
 }
 
 async function getAllPostIds(connection) {
-  const [rows] = await connection.query("SELECT id FROM posts");
-  return rows.map((row) => row.id);
+  const [rows] = await connection.query("SELECT post_id FROM posts");
+  return rows.map((row) => row.post_id);
 }
 
 async function insertUser(connection, data) {
   const [result] = await connection.query(
-    "INSERT IGNORE INTO users (username, full_name, email, bio, created_at) VALUES (?, ?, ?, ?, ?)",
-    [data.username, data.full_name, data.email, data.bio, data.created_at]
+    "INSERT IGNORE INTO users (username, email, password_hash, full_name, bio, profile_picture_url, created_at, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+      data.username,
+      data.email,
+      data.password_hash,
+      data.full_name,
+      data.bio,
+      data.profile_picture_url,
+      data.created_at,
+      data.last_login,
+    ]
   );
   return result;
 }
@@ -44,7 +53,7 @@ async function insertLike(connection, postId, userId, createdAt) {
 
 async function insertFollow(connection, followerId, followingId, createdAt) {
   const [result] = await connection.query(
-    "INSERT IGNORE INTO followers (follower_id, following_id, created_at) VALUES (?, ?, ?)",
+    "INSERT IGNORE INTO followers (follower_user_id, followed_user_id, created_at) VALUES (?, ?, ?)",
     [followerId, followingId, createdAt]
   );
   return result;

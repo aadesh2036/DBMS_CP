@@ -18,7 +18,7 @@ async function addComment(userId, postId, content) {
 
 async function addFollow(followerId, followingId) {
   const [result] = await db.query(
-    "INSERT IGNORE INTO followers (follower_id, following_id, created_at) VALUES (?, ?, ?)",
+    "INSERT IGNORE INTO followers (follower_user_id, followed_user_id, created_at) VALUES (?, ?, ?)",
     [followerId, followingId, new Date()]
   );
   return result;

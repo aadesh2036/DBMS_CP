@@ -1,0 +1,9 @@
+{
+  "name": "social-media-user-behavior-system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Root scripts for DB + backend + frontend demo run",
+  "scripts": {
+    "showcase": "powershell -ExecutionPolicy Bypass -File scripts/showcase.ps1"
+  }
+}

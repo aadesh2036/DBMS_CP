@@ -3,25 +3,27 @@ const db = require("../db");
 async function getAllPosts() {
   const [rows] = await db.query(
     `SELECT
-      p.id,
+      p.post_id,
       p.user_id,
       u.username,
       p.content,
+      p.image_url,
       p.created_at,
+      p.updated_at,
       COALESCE(l.like_count, 0) AS like_count,
       COALESCE(c.comment_count, 0) AS comment_count
     FROM posts p
-    JOIN users u ON p.user_id = u.id
+    JOIN users u ON p.user_id = u.user_id
     LEFT JOIN (
       SELECT post_id, COUNT(*) AS like_count
       FROM likes
       GROUP BY post_id
-    ) l ON p.id = l.post_id
+    ) l ON p.post_id = l.post_id
     LEFT JOIN (
       SELECT post_id, COUNT(*) AS comment_count
       FROM comments
       GROUP BY post_id
-    ) c ON p.id = c.post_id
+    ) c ON p.post_id = c.post_id
     ORDER BY p.created_at DESC`
   );
   return rows;
@@ -30,26 +32,28 @@ async function getAllPosts() {
 async function getPostById(id) {
   const [rows] = await db.query(
     `SELECT
-      p.id,
+      p.post_id,
       p.user_id,
       u.username,
       p.content,
+      p.image_url,
       p.created_at,
+      p.updated_at,
       COALESCE(l.like_count, 0) AS like_count,
       COALESCE(c.comment_count, 0) AS comment_count
     FROM posts p
-    JOIN users u ON p.user_id = u.id
+    JOIN users u ON p.user_id = u.user_id
     LEFT JOIN (
       SELECT post_id, COUNT(*) AS like_count
       FROM likes
       GROUP BY post_id
-    ) l ON p.id = l.post_id
+    ) l ON p.post_id = l.post_id
     LEFT JOIN (
       SELECT post_id, COUNT(*) AS comment_count
       FROM comments
       GROUP BY post_id
-    ) c ON p.id = c.post_id
-    WHERE p.id = ?`,
+    ) c ON p.post_id = c.post_id
+    WHERE p.post_id = ?`,
     [id]
   );
   return rows[0];
