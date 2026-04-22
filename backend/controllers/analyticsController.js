@@ -36,4 +36,27 @@ async function getUserActivity(req, res) {
   }
 }
 
-module.exports = { getTopUsers, getTopPosts, getEngagement, getUserActivity };
+async function getEngagementReport(req, res) {
+  try {
+    const { start, end } = req.query;
+    if (!start || !end) {
+      return res
+        .status(400)
+        .json({ error: "start and end dates are required" });
+    }
+    const startAt = `${start} 00:00:00`;
+    const endAt = `${end} 23:59:59`;
+    const rows = await analyticsModel.getEngagementReport(startAt, endAt);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch engagement report" });
+  }
+}
+
+module.exports = {
+  getTopUsers,
+  getTopPosts,
+  getEngagement,
+  getUserActivity,
+  getEngagementReport,
+};

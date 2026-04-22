@@ -3,9 +3,14 @@
 A beginner-friendly full-stack DBMS project that analyzes social media activity using MySQL, Express, and React. It focuses on database design, analytics queries, and clean REST APIs.
 
 ## Tech Stack
-- Backend: Node.js, Express
-- Database: MySQL
-- Frontend: React (Vite)
+| Layer | Technology | Notes |
+| --- | --- | --- |
+| Frontend | React (Vite) | Component UI, multi-panel dashboard |
+| Frontend | Axios | API client |
+| Backend | Node.js | Runtime |
+| Backend | Express | REST API |
+| Backend | mysql2 | MySQL driver |
+| Database | MySQL 8 | Tables, views, triggers, audit log |
 
 ## Quick Demo (Single Command)
 Use this when you want to quickly present the project.
@@ -98,7 +103,14 @@ npm run dev
 ## API Endpoints
 ### Users
 - GET /users
+- GET /users/:id/follow-stats
+- GET /users/:id/following
+- GET /users/:id/followers
 - GET /users/:id
+
+### Auth
+- POST /auth/login
+- POST /auth/register
 
 ### Posts
 - GET /posts
@@ -107,14 +119,23 @@ npm run dev
 
 ### Interactions
 - POST /like
+- POST /like-toggle
 - POST /comment
 - POST /follow
+- POST /follow-toggle
+
+### Feed
+- GET /feed?user_id=&page=&limit=
 
 ### Analytics
 - GET /analytics/top-users
 - GET /analytics/top-posts
 - GET /analytics/engagement
+- GET /analytics/engagement-report?start=YYYY-MM-DD&end=YYYY-MM-DD
 - GET /analytics/user-activity
+
+### Admin
+- GET /admin/audit-log?limit=50
 
 ### Data Simulation
 - POST /simulate-data
@@ -177,3 +198,4 @@ The simulation endpoint creates random users, posts, comments, likes, and follow
 ## Notes
 - Ensure MySQL is running on the host/port configured in `backend/.env` before running `npm run showcase`.
 - If `mysql` is not in PATH, the script also tries `C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe`.
+- Default admin login (seeded): admin@example.com / Admin@123

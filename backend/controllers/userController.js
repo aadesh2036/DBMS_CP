@@ -21,4 +21,37 @@ async function getUserById(req, res) {
   }
 }
 
-module.exports = { getUsers, getUserById };
+async function getFollowStats(req, res) {
+  try {
+    const stats = await userModel.getFollowStats(req.params.id);
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch follow stats" });
+  }
+}
+
+async function getFollowing(req, res) {
+  try {
+    const rows = await userModel.getFollowing(req.params.id);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch following list" });
+  }
+}
+
+async function getFollowers(req, res) {
+  try {
+    const rows = await userModel.getFollowers(req.params.id);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch followers list" });
+  }
+}
+
+module.exports = {
+  getUsers,
+  getUserById,
+  getFollowStats,
+  getFollowing,
+  getFollowers,
+};

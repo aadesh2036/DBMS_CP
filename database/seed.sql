@@ -9544,3 +9544,6 @@ INSERT INTO followers (follower_user_id, followed_user_id, created_at) VALUES
   (69, 199, '2023-10-21 14:48:54'),
   (229, 199, '2023-10-04 06:24:54');
 
+INSERT INTO users (username, email, password_hash, full_name, bio, profile_picture_url, created_at, last_login, role) VALUES
+  ('admin', 'admin@example.com', 'e86f78a8a3caf0b60d8e74e5942aa6d86dc150cd3c03338aef25b7d2d7e3acc7', 'System Admin', 'Admin account for audit log review.', NULL, NOW(), NOW(), 'admin');
+
